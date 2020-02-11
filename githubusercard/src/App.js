@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import axios from "axios";
 import UserCard from './components/UserCard';
+import FollowerCard from './components/FollowerCard';
 
 class App extends React.Component {
 
@@ -24,18 +25,22 @@ class App extends React.Component {
         myUserData: response.data
       })
     })
-    .catch(error=> console.log(error))
-
-    }
-
-    //component lifecycle method 2: code that runs when meets certain coniditon
-
-    componentDidUpdate() {
-      //friends 
-
-    }
+    .catch(error=> console.log(error));
 
 
+    axios.get('https://api.github.com/users/hesterrk/followers')
+    .then(response => {
+      console.log(response.data)
+      this.setState({
+        myFriendData: response.data
+      })
+    })
+    .catch(error=> console.log(error));
+
+
+    };
+
+   
 
   render() {
 
@@ -48,6 +53,12 @@ class App extends React.Component {
 <UserCard 
   mydetail={this.state.myUserData}
 />
+
+<div className="followers">
+  {this.state.myFriendData.map((friend, index) => {
+    return <FollowerCard friends={friend} key={index}/>
+  })}
+</div>
     </div>
   );
 

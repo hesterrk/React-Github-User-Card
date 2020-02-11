@@ -17,10 +17,7 @@ render() {
   <h3> Name: {this.props.mydetail.name} </h3>
     <p className="username">Username: {this.props.mydetail.login}</p>
   <p> Location: {this.props.mydetail.location} </p>
-  <p>Profile:
-<a href>{this.props.mydetail.html_url}</a>
-
-  </p>
+  <p>Profile:{this.props.mydetail.html_url}</p>
   <p>Folllowers:{this.props.mydetail.followers}</p>
   <p>Following: {this.props.mydetail.following}</p>
   <p>Bio:{this.props.mydetail.bio}</p>
