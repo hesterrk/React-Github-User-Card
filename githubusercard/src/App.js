@@ -4,14 +4,30 @@ import axios from "axios";
 import UserCard from './components/UserCard';
 import FollowerCard from './components/FollowerCard';
 
+import styled, { ThemeProvider } from 'styled-components';
+import NoSsr from '@material-ui/core/NoSsr';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { palette, spacing, typography } from '@material-ui/system';
+
+
+
+//material UI
+
+const Div = styled.div`${palette}${spacing}${typography}`;
+
+const theme = createMuiTheme();
+
+
+
 class App extends React.Component {
 
   //1. set up state for my data and followers data 
 
   state = {
     myUserData: [],
-    myFriendData: []
-
+    myFriendData: [],
+    userInput: ''
+  
   };
 
 
@@ -76,18 +92,65 @@ class App extends React.Component {
     };
 
 
-//method 2: componentDidUpdate: use for form to dynamically search 
+//new search feature for users dynamically
+
+handleChanges = e => {
+  this.setState({
+    userInput: e.target.value
+
+  });
+}
+
+//continued, new search feature 
+
+fetchUsers = e => {
+  e.preventDefault();
+  axios.get(`https://api.github.com/users/${this.state.userInput}/followers`)
+  .then(res => {
+    this.setState({
+      myFriendData: res.data
+    })
+    console.log(res.data)
+  })
+
+  .catch(err=> console.log(err))
 
 
-   
+}
+
+
+
 
   render() {
 
   return (
-    <div className="App">
+
+    <NoSsr>
+    <ThemeProvider theme={theme}>
+    <Div className="App"
+    color="primary.main"
+    bgcolor="lavender"
+    fontFamily="h6.fontFamily"
+    fontSize={{ xs: 'h6.fontSize' }}
+    p={{ xs: 2, sm: 3, md: 4 }}
+  
+    >
+
+
 
 {/* //map over and pass props to produce cards for each friends */}
 
+
+
+{/* //form so can search for user */}
+
+
+                <input
+               type="text"
+               value={this.state.userInput}
+               onChange={this.handleChanges}
+                />
+                <button onClick={this.fetchUsers}> Fetch Users </button>
 
 <UserCard 
   mydetail={this.state.myUserData}
@@ -98,9 +161,19 @@ class App extends React.Component {
     return <FollowerCard friends={friend} key={index}/>
   })}
 </div>
-    </div>
-  );
 
+
+{/* <div className="followerssearch">
+  {this.state.myFriendData.map((users, index) => {
+    return <UserSearch users={users} key={index}/>
+  })}
+</div> */}
+
+
+</Div>
+</ThemeProvider>
+</NoSsr>
+);
   }
 }
 
