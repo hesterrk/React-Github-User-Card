@@ -2,6 +2,7 @@ import React from 'react';
 
 
 
+
 export default class UserCard extends React.Component {
 
     //this component will recieve props from App 

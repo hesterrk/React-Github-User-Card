@@ -16,6 +16,8 @@ class App extends React.Component {
 
 
 //component lifecycle method 1: when component gets mounted
+//good to use Promise.all for 2 independent axios- takes an array of promises
+//Promise.all([axios.get(url1), axios.get(url2)]) .then([resolved1, resolved2] => setState)
 
   componentDidMount() {
     axios.get('https://api.github.com/users/hesterrk')
@@ -37,8 +39,45 @@ class App extends React.Component {
     })
     .catch(error=> console.log(error));
 
+    
+    //Promise.all syntax METHOD
+
+    // let one = 'https://api.github.com/users/hesterrk'
+    // let two = 'https://api.github.com/users/hesterrk/followers'
+
+    // const firstRequest = axios.get(one);
+    // const secondRequest = axios.get(two);
+
+    // axios.all([firstRequest, secondRequest])
+    // .then(
+    //   axios.spread((...responses) => {
+    //     const responseOne = responses[0];
+    //     const responseTwo = responses[1];
+
+    //     console.log('first', responseOne, 'second', responseTwo);
+        
+        
+    //       this.setState({
+    //       myUserData: responseOne,
+    //       myFriendData: responseTwo
+    //     })
+
+    
+
+    //   })
+    // )
+
+    // .catch(errors => console.log(errors))
+
+
+
+
 
     };
+
+
+//method 2: componentDidUpdate: use for form to dynamically search 
+
 
    
 
