@@ -36,54 +36,54 @@ class App extends React.Component {
 //Promise.all([axios.get(url1), axios.get(url2)]) .then([resolved1, resolved2] => setState)
 
   componentDidMount() {
-    axios.get('https://api.github.com/users/hesterrk')
-    .then(response => {
-      console.log(response.data)
-      this.setState({
-        myUserData: response.data
-      })
-    })
-    .catch(error=> console.log(error));
+    // axios.get('https://api.github.com/users/hesterrk')
+    // .then(response => {
+    //   console.log(response.data)
+    //   this.setState({
+    //     myUserData: response.data
+    //   })
+    // })
+    // .catch(error=> console.log(error));
 
 
-    axios.get('https://api.github.com/users/hesterrk/followers')
-    .then(response => {
-      console.log(response.data)
-      this.setState({
-        myFriendData: response.data
-      })
-    })
-    .catch(error=> console.log(error));
+    // axios.get('https://api.github.com/users/hesterrk/followers')
+    // .then(response => {
+    //   console.log(response.data)
+    //   this.setState({
+    //     myFriendData: response.data
+    //   })
+    // })
+    // .catch(error=> console.log(error));
 
     
     //Promise.all syntax METHOD
 
-    // let one = 'https://api.github.com/users/hesterrk'
-    // let two = 'https://api.github.com/users/hesterrk/followers'
+    let one = 'https://api.github.com/users/hesterrk'
+    let two = 'https://api.github.com/users/hesterrk/followers'
 
-    // const firstRequest = axios.get(one);
-    // const secondRequest = axios.get(two);
+    const firstRequest = axios.get(one);
+    const secondRequest = axios.get(two);
 
-    // axios.all([firstRequest, secondRequest])
-    // .then(
-    //   axios.spread((...responses) => {
-    //     const responseOne = responses[0];
-    //     const responseTwo = responses[1];
+    axios.all([firstRequest, secondRequest])
+    .then(
+      axios.spread((...responses) => {
+        const responseOne = responses[0].data;
+        const responseTwo = responses[1].data;
 
-    //     console.log('first', responseOne, 'second', responseTwo);
+        console.log('first', responseOne, 'second', responseTwo);
         
         
-    //       this.setState({
-    //       myUserData: responseOne,
-    //       myFriendData: responseTwo
-    //     })
+          this.setState({
+          myUserData: responseOne,
+          myFriendData: responseTwo
+        })
 
     
 
-    //   })
-    // )
+      })
+    )
 
-    // .catch(errors => console.log(errors))
+    .catch(errors => console.log(errors))
 
 
 
